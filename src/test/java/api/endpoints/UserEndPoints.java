@@ -11,18 +11,20 @@ import io.restassured.response.Response;
 public class UserEndPoints {
 
 	public static Response createUser(User payload) {
-		return given()
+		Response response = given()
 				.contentType(ContentType.JSON)
 				.accept(ContentType.JSON)
+				.body(payload)
 		.when()
 				.post(POST_URL);
+		return response;
 	}
 
-	public static Response createUser(String userName) {
+	public static Response readUser(String userName) {
 		return given()
-				.pathParam("username",userName)
+					.pathParam("username",userName)
 				.when()
-				.post(GET_URL);
+					.get(GET_URL);
 	}
 
 	public static Response updateUser(String userName, User payload) {
@@ -30,14 +32,15 @@ public class UserEndPoints {
 				.contentType(ContentType.JSON)
 				.accept(ContentType.JSON)
 				.pathParam("username",userName)
+				.body(payload)
 				.when()
-				.post(UPDATE_URL);
+				.put(UPDATE_URL);
 	}
 
-	public static Response updateUser(String userName) {
+	public static Response deleteUser(String userName) {
 		return given()
 				.pathParam("username",userName)
 				.when()
-				.post(DELETE_URL);
+				.delete(DELETE_URL);
 	}
 }
